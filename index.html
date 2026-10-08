@@ -129,6 +129,19 @@
     cursor: pointer;
   }
   .toolbar button:hover { background: var(--bar-blue); }
+  .submit-btn {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 10px 26px;
+    border: 2px solid #000;
+    background: var(--bar-blue);
+    cursor: pointer;
+  }
+  .submit-btn:hover { background: #a5bede; }
+  .submit-btn:disabled { opacity: .55; cursor: default; }
+  .status { font-size: 14px; font-style: italic; margin-left: 12px; align-self: center; }
   @media print {
     body { background: #fff; padding: 0; }
     .toolbar { display: none; }
@@ -150,41 +163,41 @@
   <p class="invitation-line">
     You are invited to apply for the position of <strong>HONORED GUEST</strong>
     at the graduation celebration of
-    <span class="value" contenteditable="true" data-ph="" style="border-bottom:1px solid #000; padding:1px 4px 2px; min-width:120px; display:inline-block;">Hung</span>.
+    <span class="value" style="border-bottom:1px solid #000; padding:1px 4px 2px; min-width:120px; display:inline-block;">Nguyen Do Khanh Hung</span>.
   </p>
 
   <div class="section-bar">GRADUATE INFORMATION</div>
 
   <div class="row">
     <div class="field">
-      <span class="label">FULL NAME: Nguyen Do Khanh Hung</span>
-      <span class="value" contenteditable="true" data-ph="First&ensp;&ensp;&ensp;&ensp;Middle&ensp;&ensp;&ensp;&ensp;Last">Hung</span>
+      <span class="label">FULL NAME:</span>
+      <span class="value">Nguyen Do Khanh Hung</span>
     </div>
     <div class="field">
-      <span class="label">DATE OF CEREMONY: 18/08/2026</span>
-      <span class="value" contenteditable="true" data-ph="MM / DD / YYYY"></span>
-    </div>
-  </div>
-  <div class="row">
-    <div class="field">
-      <span class="label">DEGREE: Bachelor</span>
-      <span class="value" contenteditable="true" data-ph="e.g. Bachelor of Science"></span>
-    </div>
-    <div class="field">
-      <span class="label">MAJOR: Computer Science</span>
-      <span class="value" contenteditable="true" data-ph="e.g. Computer Science"></span>
+      <span class="label">DATE OF CEREMONY:</span>
+      <span class="value">18/08/2026</span>
     </div>
   </div>
   <div class="row">
     <div class="field">
-      <span class="label">UNIVERSITY / SCHOOL: Troy University</span>
-      <span class="value" contenteditable="true" data-ph=""></span>
+      <span class="label">DEGREE:</span>
+      <span class="value">Bachelor</span>
+    </div>
+    <div class="field">
+      <span class="label">MAJOR:</span>
+      <span class="value">Computer Science</span>
     </div>
   </div>
   <div class="row">
     <div class="field">
-      <span class="label">CLASS OF: K28</span>
-      <span class="value" contenteditable="true" data-ph="e.g. 2026"></span>
+      <span class="label">UNIVERSITY / SCHOOL:</span>
+      <span class="value">Troy University</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <span class="label">CLASS OF:</span>
+      <span class="value">K28</span>
     </div>
   </div>
 
@@ -192,30 +205,30 @@
 
   <div class="row">
     <div class="field">
-      <span class="label">DATE: 18/08/2026</span>
-      <span class="value" contenteditable="true" data-ph="MM / DD / YYYY"></span>
+      <span class="label">DATE:</span>
+      <span class="value">18/08/2026</span>
     </div>
     <div class="field">
-      <span class="label">TIME: 2:00 PM</span>
-      <span class="value" contenteditable="true" data-ph="e.g. 9:00 AM"></span>
-    </div>
-  </div>
-  <div class="row">
-    <div class="field">
-      <span class="label">VENUE: 03 Quang Trung</span>
-      <span class="value" contenteditable="true" data-ph="Hall / Building name"></span>
+      <span class="label">TIME:</span>
+      <span class="value">2:00 PM</span>
     </div>
   </div>
   <div class="row">
     <div class="field">
-      <span class="label">ADDRESS: 03 Quang Trung</span>
-      <span class="value" contenteditable="true" data-ph="Street Address"></span>
+      <span class="label">VENUE:</span>
+      <span class="value">03 Quang Trung</span>
     </div>
   </div>
   <div class="row">
     <div class="field">
-      <span class="label">CITY: Da Nang</span>
-      <span class="value" contenteditable="true" data-ph=""></span>
+      <span class="label">ADDRESS:</span>
+      <span class="value">03 Quang Trung</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <span class="label">CITY:</span>
+      <span class="value">Da Nang</span>
     </div>
   </div>
 
@@ -231,28 +244,28 @@
 
   <div class="section-bar">RSVP</div>
 
-  <div class="check-group">
-    <label><input type="checkbox"> GLADLY ACCEPTS</label>
-    <label><input type="checkbox"> REGRETFULLY DECLINES</label>
+  <div class="check-group" id="rsvp-choice">
+    <label><input type="checkbox" id="accepts-yes"> GLADLY ACCEPTS</label>
+    <label><input type="checkbox" id="accepts-no"> REGRETFULLY DECLINES</label>
   </div>
   <div class="row">
     <div class="field">
       <span class="label">GUEST NAME:</span>
-      <span class="value" contenteditable="true" data-ph=""></span>
+      <span class="value" id="f-guest-name" contenteditable="true" data-ph=""></span>
     </div>
     <div class="field">
       <span class="label">NUMBER OF GUESTS:</span>
-      <span class="value" contenteditable="true" data-ph=""></span>
+      <span class="value" id="f-guests" contenteditable="true" data-ph=""></span>
     </div>
   </div>
   <div class="row">
     <div class="field">
       <span class="label">E-MAIL:</span>
-      <span class="value" contenteditable="true" data-ph=""></span>
+      <span class="value" id="f-email" contenteditable="true" data-ph=""></span>
     </div>
     <div class="field">
       <span class="label">PHONE:</span>
-      <span class="value" contenteditable="true" data-ph=""></span>
+      <span class="value" id="f-phone" contenteditable="true" data-ph=""></span>
     </div>
   </div>
   <div class="row">
@@ -266,11 +279,73 @@
     </div>
   </div>
 
+  <div class="row" style="margin-top:18px;">
+    <button id="rsvp-submit" class="submit-btn">SUBMIT APPLICATION</button>
+    <span id="rsvp-status" class="status"></span>
+  </div>
+
   <div class="footer" style="justify-content:flex-end;">
     <div>Page 1 of 1</div>
   </div>
 
 </div>
+
+<script>
+  // Wired to Hung's Supabase project (anon/publishable key — safe for public pages)
+  const SUPABASE_URL = "https://ymlwsogtnkasectrrehl.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_OkThvFewgPt1tAvdzCZNvA_fgcRwa1J";
+
+  const statusEl = document.getElementById("rsvp-status");
+  const submitBtn = document.getElementById("rsvp-submit");
+  const text = (id) => (document.getElementById(id).textContent || "").trim();
+
+  // Make the two RSVP checkboxes mutually exclusive
+  const yesBox = document.getElementById("accepts-yes");
+  const noBox = document.getElementById("accepts-no");
+  yesBox.addEventListener("change", () => { if (yesBox.checked) noBox.checked = false; });
+  noBox.addEventListener("change", () => { if (noBox.checked) yesBox.checked = false; });
+
+  submitBtn.addEventListener("click", async () => {
+    const guestName = text("f-guest-name");
+    if (!guestName) {
+      statusEl.textContent = "Please enter the guest name first.";
+      return;
+    }
+    if (!yesBox.checked && !noBox.checked) {
+      statusEl.textContent = "Please tick Gladly Accepts or Regretfully Declines.";
+      return;
+    }
+    submitBtn.disabled = true;
+    statusEl.textContent = "Submitting...";
+    try {
+      // NOTE: only the apikey header is sent. The new sb_publishable_ key
+      // format breaks RLS when also sent as Authorization: Bearer.
+      const guests = parseInt(text("f-guests"), 10);
+      const resp = await fetch(SUPABASE_URL + "/rest/v1/rsvps", {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_ANON_KEY,
+          "Content-Type": "application/json",
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify({
+          guest_name: guestName,
+          guests: Number.isFinite(guests) && guests > 0 ? guests : 1,
+          email: text("f-email") || null,
+          phone: text("f-phone") || null,
+          accepts: yesBox.checked
+        })
+      });
+      if (!resp.ok) throw new Error("HTTP " + resp.status);
+      statusEl.textContent = yesBox.checked
+        ? "Application received. See you at the ceremony!"
+        : "Application received. You will be missed!";
+    } catch (e) {
+      statusEl.textContent = "Something went wrong, please try again.";
+    }
+    submitBtn.disabled = false;
+  });
+</script>
 
 </body>
 </html>
