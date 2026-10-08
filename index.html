@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employment / Job Application</title>
+<style>
+  :root {
+    --bar-blue: #b9cde5;
+    --ink: #000;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 12px;
+    background: #e8e8e8;
+    font-family: "Times New Roman", Times, Georgia, serif;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 48px 56px 40px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.18);
+    position: relative;
+  }
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    letter-spacing: 1px;
+    margin: 0 0 28px;
+  }
+  .invitation-line {
+    text-align: center;
+    font-style: italic;
+    font-size: 17px;
+    margin: 0 0 28px;
+  }
+  .invitation-line [contenteditable] { font-style: normal; }
+  .section-bar {
+    background: var(--bar-blue);
+    border: 1px solid #000;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 1px;
+    padding: 5px 8px;
+    margin: 26px 0 16px;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    align-items: baseline;
+    margin: 0 0 10px;
+  }
+  .field {
+    display: flex;
+    align-items: baseline;
+    flex: 1 1 auto;
+    min-width: 180px;
+  }
+  .field .label {
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
+    margin-right: 6px;
+  }
+  .field .value {
+    flex: 1;
+    border-bottom: 1px solid #000;
+    min-width: 60px;
+    padding: 1px 4px 2px;
+    font-size: 15px;
+    outline: none;
+  }
+  .field .value:empty::before {
+    content: attr(data-ph);
+    color: #9a9a9a;
+    font-style: italic;
+  }
+  .check-group { margin: 10px 0; font-size: 14px; }
+  .check-group label { margin-right: 26px; cursor: pointer; }
+  .check-group.benefits label { display: block; margin: 9px 0; }
+  .check-group input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    border: 1.5px solid #000;
+    background: #fff;
+    vertical-align: -2px;
+    margin-right: 6px;
+    cursor: pointer;
+    position: relative;
+  }
+  .check-group input[type="checkbox"]:checked::after {
+    content: "✕";
+    position: absolute;
+    top: -4px; left: 1px;
+    font-size: 13px;
+    line-height: 1;
+  }
+  .note {
+    font-size: 14px;
+    margin: 8px 0;
+  }
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 40px;
+    font-size: 13px;
+    color: #333;
+  }
+  .toolbar {
+    max-width: 820px;
+    margin: 0 auto 14px;
+    text-align: right;
+  }
+  .toolbar button {
+    font-family: inherit;
+    font-size: 14px;
+    padding: 8px 18px;
+    border: 1px solid #000;
+    background: #fff;
+    cursor: pointer;
+  }
+  .toolbar button:hover { background: var(--bar-blue); }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .toolbar { display: none; }
+    .page { box-shadow: none; max-width: none; padding: 40px 48px; }
+    .field .value:empty::before { content: ""; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div class="page">
+
+  <h1>EMPLOYMENT / JOB APPLICATION</h1>
+
+  <p class="invitation-line">
+    You are invited to apply for the position of <strong>HONORED GUEST</strong>
+    at the graduation celebration of
+    <span class="value" contenteditable="true" data-ph="" style="border-bottom:1px solid #000; padding:1px 4px 2px; min-width:120px; display:inline-block;">Hung</span>.
+  </p>
+
+  <div class="section-bar">GRADUATE INFORMATION</div>
+
+  <div class="row">
+    <div class="field">
+      <span class="label">FULL NAME:</span>
+      <span class="value" contenteditable="true" data-ph="First&ensp;&ensp;&ensp;&ensp;Middle&ensp;&ensp;&ensp;&ensp;Last">Hung</span>
+    </div>
+    <div class="field">
+      <span class="label">DATE OF CEREMONY:</span>
+      <span class="value" contenteditable="true" data-ph="MM / DD / YYYY"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <span class="label">DEGREE:</span>
+      <span class="value" contenteditable="true" data-ph="e.g. Bachelor of Science"></span>
+    </div>
+    <div class="field">
+      <span class="label">MAJOR:</span>
+      <span class="value" contenteditable="true" data-ph="e.g. Computer Science"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <span class="label">UNIVERSITY / SCHOOL:</span>
+      <span class="value" contenteditable="true" data-ph=""></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <span class="label">CLASS OF:</span>
+      <span class="value" contenteditable="true" data-ph="e.g. 2026"></span>
+    </div>
+  </div>
+
+  <div class="section-bar">CEREMONY DETAILS</div>
+
+  <div class="row">
+    <div class="field">
+      <span class="label">DATE:</span>
+      <span class="value" contenteditable="true" data-ph="MM / DD / YYYY"></span>
+    </div>
+    <div class="field">
+      <span class="label">TIME:</span>
+      <span class="value" contenteditable="true" data-ph="e.g. 9:00 AM"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <span class="label">VENUE:</span>
+      <span class="value" contenteditable="true" data-ph="Hall / Building name"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <span class="label">ADDRESS:</span>
+      <span class="value" contenteditable="true" data-ph="Street Address"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <span class="label">CITY:</span>
+      <span class="value" contenteditable="true" data-ph=""></span>
+    </div>
+  </div>
+
+  <div class="section-bar">BENEFITS</div>
+
+  <div class="check-group benefits">
+    <label><input type="checkbox"> GUARANTEED SEAT &mdash; FIRST COME, FIRST SERVED</label>
+    <label><input type="checkbox"> BYOB &mdash; BRING YOUR OWN BEVERAGE</label>
+    <label><input type="checkbox"> AIR CONDITIONING &mdash; FULL BLAST</label>
+    <label><input type="checkbox"> FREE PARKING &amp; EASY ACCESS</label>
+    <label><input type="checkbox"> FREE HUG FROM THE GRADUATE</label>
+  </div>
+
+  <div class="section-bar">RSVP</div>
+
+  <div class="check-group">
+    <label><input type="checkbox"> GLADLY ACCEPTS</label>
+    <label><input type="checkbox"> REGRETFULLY DECLINES</label>
+  </div>
+  <div class="row">
+    <div class="field">
+      <span class="label">GUEST NAME:</span>
+      <span class="value" contenteditable="true" data-ph=""></span>
+    </div>
+    <div class="field">
+      <span class="label">NUMBER OF GUESTS:</span>
+      <span class="value" contenteditable="true" data-ph=""></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <span class="label">E-MAIL:</span>
+      <span class="value" contenteditable="true" data-ph=""></span>
+    </div>
+    <div class="field">
+      <span class="label">PHONE:</span>
+      <span class="value" contenteditable="true" data-ph=""></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <span class="label">KINDLY RESPOND BY:</span>
+      <span class="value" contenteditable="true" data-ph="MM / DD / YYYY"></span>
+    </div>
+    <div class="field">
+      <span class="label">CONTACT:</span>
+      <span class="value" contenteditable="true" data-ph="Your phone or email"></span>
+    </div>
+  </div>
+
+  <div class="footer" style="justify-content:flex-end;">
+    <div>Page 1 of 1</div>
+  </div>
+
+</div>
+
+</body>
+</html>
