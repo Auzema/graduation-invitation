@@ -407,9 +407,9 @@ const CONFIG = {
     { time: "14:30", icon: "🎓", title: "Trao bằng tốt nghiệp",  desc: "Nghi thức trao bằng cho tân cử nhân" },
     { time: "15:30", icon: "📸", title: "Chụp hình kỷ niệm",     desc: "Lưu lại khoảnh khắc cùng gia đình & bạn bè" }
   ],
-  /* RSVP: dán URL Google Apps Script / Formspree vào rsvpEndpoint để nhận phản hồi tự động.
-     Để trống thì nút Xác nhận sẽ mở tin nhắn SMS soạn sẵn gửi tới rsvpPhone. */
-  rsvpEndpoint: "",
+  /* RSVP lưu vào Supabase (bảng "rsvp"). Để trống thì nút Xác nhận mở SMS soạn sẵn gửi tới rsvpPhone. */
+  supabaseUrl: "",
+  supabaseKey: "",   /* anon public key — chỉ có quyền thêm RSVP, không đọc được */
   rsvpPhone: "0869044861",
   /* Số hỗ trợ hiện trên thiệp — để trống thì ẩn */
   supportPhone: "0869 044 861"
@@ -528,21 +528,31 @@ form.addEventListener("submit", async e => {
   const name = $("rName").value.trim();
   if (!name) { say("Bạn nhập họ tên giúp mình nhé.", "err"); $("rName").focus(); return; }
   const going = form.attend.value === "Có";
-  const data = { name, attend: form.attend.value };
 
-  if (CONFIG.rsvpEndpoint) {
+  if (CONFIG.supabaseUrl) {
     $("rSubmit").disabled = true; say("Đang gửi...");
     try {
-      await fetch(CONFIG.rsvpEndpoint, { method: "POST", mode: "no-cors", body: new URLSearchParams(data) });
+      const res = await fetch(CONFIG.supabaseUrl + "/rest/v1/rsvp", {
+        method: "POST",
+        headers: {
+          apikey: CONFIG.supabaseKey,
+          Authorization: "Bearer " + CONFIG.supabaseKey,
+          "Content-Type": "application/json",
+          Prefer: "return=minimal"
+        },
+        body: JSON.stringify({ name, attending: going })
+      });
+      if (!res.ok) throw new Error(res.status);
       say(going ? "Đã nhận! Hẹn gặp bạn nhé 🎓" : "Đã nhận. Cảm ơn bạn đã báo!", "ok");
       if (going) burst();
       form.reset();
     } catch {
-      say("Gửi không được, bạn thử lại hoặc nhắn tin trực tiếp nhé.", "err");
+      say("Gửi không được, bạn thử lại hoặc gọi cho mình nhé.", "err");
     }
     $("rSubmit").disabled = false;
     return;
   }
+
 
   const text = "[RSVP tốt nghiệp] " + name + (going ? " sẽ đến" : " không đến được");
   if (CONFIG.rsvpPhone) {
