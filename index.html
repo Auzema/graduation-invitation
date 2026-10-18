@@ -408,8 +408,8 @@ const CONFIG = {
     { time: "15:30", icon: "📸", title: "Chụp hình kỷ niệm",     desc: "Lưu lại khoảnh khắc cùng gia đình & bạn bè" }
   ],
   /* RSVP lưu vào Supabase (bảng "rsvp"). Để trống thì nút Xác nhận mở SMS soạn sẵn gửi tới rsvpPhone. */
-  supabaseUrl: "",
-  supabaseKey: "",   /* anon public key — chỉ có quyền thêm RSVP, không đọc được */
+  supabaseUrl: "https://ymlwsogtnkasectrrehl.supabase.co",
+  supabaseKey: "sb_publishable_OkThvFewgPt1tAvdzCZNvA_fgcRwa1J",   /* khóa công khai — chỉ có quyền thêm RSVP, không đọc được */
   rsvpPhone: "0869044861",
   /* Số hỗ trợ hiện trên thiệp — để trống thì ẩn */
   supportPhone: "0869 044 861"
@@ -536,7 +536,6 @@ form.addEventListener("submit", async e => {
         method: "POST",
         headers: {
           apikey: CONFIG.supabaseKey,
-          Authorization: "Bearer " + CONFIG.supabaseKey,
           "Content-Type": "application/json",
           Prefer: "return=minimal"
         },
