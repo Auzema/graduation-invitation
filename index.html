@@ -191,6 +191,59 @@
   .btn:active { transform: translate(3px,3px); box-shadow: 0 0 0 var(--ink); }
   .btn.primary { background: var(--ink); color: var(--amber); }
 
+  /* ---------- Lịch trình ---------- */
+  .sec { margin-top: 22px; text-align: left; }
+  .sec-h { font-family: var(--pixel); font-size: 22px; letter-spacing: .12em; color: var(--ink); margin: 0 0 2px; }
+  .sec-h span { color: var(--muted); }
+  .sec-sub { font-size: 11px; color: var(--muted); margin: 0 0 10px; }
+  .sched {
+    display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory;
+    padding: 4px 4px 12px; margin: 0 -4px; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .sched::-webkit-scrollbar { display: none; }
+  .ev {
+    flex: 0 0 78%; scroll-snap-align: start; background: var(--paper-2);
+    border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); padding: 12px 14px;
+  }
+  .ev-ico { font-size: 22px; line-height: 1; }
+  .ev-time { font-family: var(--pixel); font-size: 26px; color: var(--red); margin-top: 6px; line-height: 1; }
+  .ev-title { font-size: 14px; font-weight: 600; margin-top: 6px; }
+  .ev-desc { font-size: 12px; color: #4a3d2c; margin-top: 4px; line-height: 1.5; }
+  .swipe { text-align: center; font-family: var(--pixel); font-size: 17px; letter-spacing: .2em; color: var(--muted); }
+
+  /* ---------- RSVP ---------- */
+  .contact {
+    display: flex; align-items: center; gap: 10px; border: 2px dashed var(--ink);
+    padding: 8px 10px; margin-bottom: 12px; text-decoration: none; color: var(--ink);
+  }
+  .contact[hidden] { display: none; }
+  .contact small { display: block; font-size: 9px; letter-spacing: .16em; color: var(--muted); font-weight: 600; }
+  .contact b { font-size: 13px; }
+  .contact .call { margin-left: auto; font-family: var(--pixel); font-size: 18px; border: 2px solid var(--ink); padding: 0 10px; }
+  .rsvp .lb { display: block; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 12px 0 5px; }
+  .rsvp input[type=text], .rsvp textarea {
+    width: 100%; font: 14px var(--mono); color: var(--ink); background: #fbf5e4;
+    border: 2px solid var(--ink); padding: 9px 10px; border-radius: 0; outline: none;
+  }
+  .rsvp input[type=text]:focus, .rsvp textarea:focus { box-shadow: 3px 3px 0 var(--amber); }
+  .rsvp textarea { min-height: 76px; resize: vertical; }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .seg input { position: absolute; opacity: 0; pointer-events: none; }
+  .seg label {
+    display: block; text-align: center; border: 2px solid var(--ink); padding: 8px 4px; cursor: pointer;
+    font-size: 13px; font-weight: 600; background: #fbf5e4;
+  }
+  .seg input:checked + label { background: var(--ink); color: var(--amber); }
+  .seg input:focus-visible + label { outline: 3px solid var(--amber); outline-offset: 2px; }
+  .step { display: flex; align-items: center; justify-content: space-between; }
+  .step button { width: 44px; height: 40px; font-size: 22px; padding: 0; }
+  .step button:disabled { opacity: .35; cursor: default; }
+  .step output { font-family: var(--pixel); font-size: 32px; }
+  .rsvp .submit { width: 100%; margin-top: 16px; padding: 8px 16px 6px; font-size: 22px; }
+  .rsvp-note { font-size: 12px; text-align: center; margin: 10px 0 0; min-height: 1em; }
+  .rsvp-note.ok { color: #1f7a62; } .rsvp-note.err { color: var(--red); }
+  .rsvp.guests-off .guests { display: none; }
+
   canvas#confetti { position: fixed; inset: 0; pointer-events: none; z-index: 40; }
 
   @media (prefers-reduced-motion: reduce) {
@@ -255,6 +308,47 @@
 
         <div class="minimap"><iframe id="mapFrame" title="Bản đồ địa điểm" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
 
+        <section class="sec" aria-labelledby="schedH">
+          <h2 class="sec-h" id="schedH"><span>//</span> LỊCH TRÌNH</h2>
+          <p class="sec-sub">Mời bạn cùng tham gia từng khoảnh khắc</p>
+          <div class="sched" id="sched"></div>
+          <div class="swipe">← VUỐT ĐỂ XEM THÊM →</div>
+        </section>
+
+        <section class="sec" aria-labelledby="rsvpH">
+          <h2 class="sec-h" id="rsvpH"><span>//</span> BẠN SẼ ĐẾN CHỨ?</h2>
+          <p class="sec-sub">Xác nhận giúp mình để chuẩn bị chu đáo nhé</p>
+          <a class="contact" id="contact" hidden>
+            <span><small>NẾU MÌNH KHÔNG NGHE MÁY</small><b id="contactText"></b></span>
+            <span class="call">GỌI</span>
+          </a>
+          <form class="rsvp" id="rsvp" novalidate>
+            <label class="lb" for="rName">Họ tên</label>
+            <input type="text" id="rName" name="name" autocomplete="name" placeholder="Nhập họ tên của bạn..." required>
+
+            <span class="lb">Tham dự</span>
+            <div class="seg" role="radiogroup" aria-label="Tham dự">
+              <input type="radio" name="attend" id="aYes" value="Có" checked><label for="aYes">Sẽ đến</label>
+              <input type="radio" name="attend" id="aNo" value="Không"><label for="aNo">Tiếc quá, không đến được</label>
+            </div>
+
+            <div class="guests">
+              <label class="lb" for="gCount">Số người (tối đa 5)</label>
+              <div class="step">
+                <button class="btn" type="button" id="gMinus" aria-label="Bớt một người">−</button>
+                <output id="gCount" aria-live="polite">1</output>
+                <button class="btn" type="button" id="gPlus" aria-label="Thêm một người">+</button>
+              </div>
+            </div>
+
+            <label class="lb" for="rMsg">Lời nhắn (không bắt buộc)</label>
+            <textarea id="rMsg" name="message" placeholder="Viết vài lời..."></textarea>
+
+            <button class="btn primary submit" type="submit" id="rSubmit">➤ XÁC NHẬN</button>
+            <p class="rsvp-note" id="rNote" role="status"></p>
+          </form>
+        </section>
+
         <div class="actions">
           <a class="btn" id="mapBtn" target="_blank" rel="noopener">XEM BẢN ĐỒ</a>
           <button class="btn" id="closeBtn" type="button">GẤP THIỆP LẠI</button>
@@ -288,7 +382,21 @@ const CONFIG = {
   time:    "2:00 PM (14:00)",
   venue:   "03 Quang Trung",
   city:    "Đà Nẵng",
-  message: "Sau bao đêm debug và deadline, bản build \"Cử nhân\" cuối cùng cũng chạy ổn. Mời bạn đến chung vui — sự có mặt của bạn là bản release đẹp nhất của ngày hôm đó."
+  message: "Sau bao đêm debug và deadline, bản build \"Cử nhân\" cuối cùng cũng chạy ổn. Mời bạn đến chung vui — sự có mặt của bạn là bản release đẹp nhất của ngày hôm đó.",
+  /* Lịch trình — sửa giờ/nội dung cho đúng */
+  schedule: [
+    { time: "13:30", icon: "🚗", title: "Đón khách & check-in", desc: "Đón khách, ổn định chỗ ngồi" },
+    { time: "14:00", icon: "🎓", title: "Lễ tốt nghiệp",        desc: "Nghi thức chính thức & trao bằng" },
+    { time: "15:30", icon: "📸", title: "Chụp ảnh lưu niệm",    desc: "Chụp ảnh cùng gia đình & bạn bè" },
+    { time: "16:30", icon: "🥂", title: "Tiệc nhẹ",              desc: "Cùng ăn mừng và trò chuyện" }
+  ],
+  /* RSVP: dán URL Google Apps Script / Formspree vào rsvpEndpoint để nhận phản hồi tự động.
+     Để trống thì nút Xác nhận sẽ mở tin nhắn SMS soạn sẵn gửi tới rsvpPhone. */
+  rsvpEndpoint: "",
+  rsvpPhone: "",
+  /* Người liên hệ dự phòng — để trống thì ẩn */
+  backupName: "",
+  backupPhone: ""
 };
 /* ======================================== */
 
@@ -369,6 +477,69 @@ $("closeBtn").addEventListener("click", () => {
   opened = false;
   animateTo(0);
   env.focus({ preventScroll: true });
+});
+
+/* ---------- lịch trình ---------- */
+for (const ev of CONFIG.schedule) {
+  const el = document.createElement("div");
+  el.className = "ev";
+  el.innerHTML = '<div class="ev-ico" aria-hidden="true"></div><div class="ev-time"></div><div class="ev-title"></div><div class="ev-desc"></div>';
+  el.children[0].textContent = ev.icon;
+  el.children[1].textContent = ev.time;
+  el.children[2].textContent = ev.title;
+  el.children[3].textContent = ev.desc;
+  $("sched").appendChild(el);
+}
+
+/* ---------- RSVP ---------- */
+if (CONFIG.backupPhone) {
+  $("contact").hidden = false;
+  $("contact").href = "tel:" + CONFIG.backupPhone.replace(/\s/g, "");
+  $("contactText").textContent = (CONFIG.backupName ? CONFIG.backupName + " · " : "") + CONFIG.backupPhone;
+}
+const form = $("rsvp"), note = $("rNote");
+let guests = 1;
+function setGuests(n) {
+  guests = Math.max(1, Math.min(5, n));
+  $("gCount").textContent = guests;
+  $("gMinus").disabled = guests === 1;
+  $("gPlus").disabled = guests === 5;
+}
+$("gMinus").addEventListener("click", () => setGuests(guests - 1));
+$("gPlus").addEventListener("click", () => setGuests(guests + 1));
+setGuests(1);
+form.addEventListener("change", () => form.classList.toggle("guests-off", form.attend.value === "Không"));
+
+function say(text, kind) { note.textContent = text; note.className = "rsvp-note " + (kind || ""); }
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  const name = $("rName").value.trim();
+  if (!name) { say("Bạn nhập họ tên giúp mình nhé.", "err"); $("rName").focus(); return; }
+  const going = form.attend.value === "Có";
+  const data = { name, attend: form.attend.value, guests: going ? guests : 0, message: $("rMsg").value.trim() };
+
+  if (CONFIG.rsvpEndpoint) {
+    $("rSubmit").disabled = true; say("Đang gửi...");
+    try {
+      await fetch(CONFIG.rsvpEndpoint, { method: "POST", mode: "no-cors", body: new URLSearchParams(data) });
+      say(going ? "Đã nhận! Hẹn gặp bạn nhé 🎓" : "Đã nhận. Cảm ơn bạn đã báo!", "ok");
+      if (going) burst();
+      form.reset(); setGuests(1); form.classList.remove("guests-off");
+    } catch {
+      say("Gửi không được, bạn thử lại hoặc nhắn tin trực tiếp nhé.", "err");
+    }
+    $("rSubmit").disabled = false;
+    return;
+  }
+
+  const text = "[RSVP tốt nghiệp] " + name + (going ? " sẽ đến · " + guests + " người" : " không đến được")
+    + (data.message ? " · Lời nhắn: " + data.message : "");
+  if (CONFIG.rsvpPhone) {
+    location.href = "sms:" + CONFIG.rsvpPhone.replace(/\s/g, "") + "?&body=" + encodeURIComponent(text);
+    say("Đã mở tin nhắn soạn sẵn — bấm Gửi là xong!", "ok");
+  } else {
+    say("Chưa cấu hình nơi nhận RSVP.", "err");
+  }
 });
 
 /* ---------- confetti (ô vuông pixel) ---------- */
