@@ -119,6 +119,8 @@
     display: grid; place-items: center; color: var(--amber); pointer-events: none;
     font-family: var(--pixel); font-size: 21px; line-height: .9; text-align: center;
   }
+  .minimap { margin-top: 14px; border: 2px solid var(--ink); height: 170px; overflow: hidden; }
+  .minimap iframe { width: 100%; height: 100%; border: 0; display: block; }
   .address {
     position: absolute; left: 14%; bottom: 13%; z-index: 5; pointer-events: none;
     font-size: 10px; line-height: 1.6; color: var(--ink); letter-spacing: .04em;
@@ -251,6 +253,8 @@
         <div class="kv"><small>Địa điểm</small><strong id="vVenue"></strong></div>
         <div class="kv"><small>Thành phố</small><strong id="vCity"></strong></div>
 
+        <div class="minimap"><iframe id="mapFrame" title="Bản đồ địa điểm" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+
         <div class="actions">
           <a class="btn" id="mapBtn" target="_blank" rel="noopener">XEM BẢN ĐỒ</a>
           <button class="btn" id="closeBtn" type="button">GẤP THIỆP LẠI</button>
@@ -279,8 +283,8 @@ const CONFIG = {
   major:   "Computer Science",
   school:  "Troy University",
   cls:     "K28",
-  date:    "Thứ Ba, 18/08/2026",
-  dateShort: "18.08.26",
+  date:    "Chủ Nhật, 18/10/2026",
+  dateShort: "18.10.26",
   time:    "2:00 PM (14:00)",
   venue:   "03 Quang Trung",
   city:    "Đà Nẵng",
@@ -303,6 +307,7 @@ $("vTime").textContent = CONFIG.time;
 $("vVenue").textContent = CONFIG.venue;
 $("vCity").textContent = CONFIG.city;
 $("mapBtn").href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.venue + ", " + CONFIG.city);
+$("mapFrame").src = "https://www.google.com/maps?q=" + encodeURIComponent(CONFIG.venue + ", " + CONFIG.city) + "&z=16&output=embed";
 document.title = "Thiệp mời tốt nghiệp · " + CONFIG.name;
 
 /* ---------- kéo phong bì ---------- */
