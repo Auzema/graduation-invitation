@@ -407,7 +407,7 @@ const CONFIG = {
     { time: "14:30", icon: "🎓", title: "Trao bằng tốt nghiệp",  desc: "Nghi thức trao bằng cho tân cử nhân" },
     { time: "15:30", icon: "📸", title: "Chụp hình kỷ niệm",     desc: "Lưu lại khoảnh khắc cùng gia đình & bạn bè" }
   ],
-  /* RSVP lưu vào Supabase (bảng "rsvp"). Để trống thì nút Xác nhận mở SMS soạn sẵn gửi tới rsvpPhone. */
+  /* RSVP lưu vào Supabase (bảng "rsvps"). Để trống thì nút Xác nhận mở SMS soạn sẵn gửi tới rsvpPhone. */
   supabaseUrl: "https://ymlwsogtnkasectrrehl.supabase.co",
   supabaseKey: "sb_publishable_OkThvFewgPt1tAvdzCZNvA_fgcRwa1J",   /* khóa công khai — chỉ có quyền thêm RSVP, không đọc được */
   rsvpPhone: "0869044861",
@@ -532,14 +532,14 @@ form.addEventListener("submit", async e => {
   if (CONFIG.supabaseUrl) {
     $("rSubmit").disabled = true; say("Đang gửi...");
     try {
-      const res = await fetch(CONFIG.supabaseUrl + "/rest/v1/rsvp", {
+      const res = await fetch(CONFIG.supabaseUrl + "/rest/v1/rsvps", {
         method: "POST",
         headers: {
           apikey: CONFIG.supabaseKey,
           "Content-Type": "application/json",
           Prefer: "return=minimal"
         },
-        body: JSON.stringify({ name, attending: going })
+        body: JSON.stringify({ guest_name: name, accepts: going })
       });
       if (!res.ok) throw new Error(res.status);
       say(going ? "Đã nhận! Hẹn gặp bạn nhé 🎓" : "Đã nhận. Cảm ơn bạn đã báo!", "ok");
